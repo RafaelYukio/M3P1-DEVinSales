@@ -1,4 +1,4 @@
-﻿using DevInSales.Core.Data.Dtos;
+﻿using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 using System;
 using System.Collections.Generic;

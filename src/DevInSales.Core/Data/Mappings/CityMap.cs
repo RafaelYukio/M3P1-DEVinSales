@@ -18,13 +18,22 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Name)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .IsRequired();
+            .HasMaxLength(255)
+            .IsUnicode(false)
+            .IsRequired();
 
             builder.HasOne(p => p.State)
-                .WithMany(p => p.Cities)
-                .HasForeignKey(p => p.StateId);
+            .WithMany(p => p.Cities)
+            .HasForeignKey(p => p.StateId);
+            builder.HasData(
+            new List<City>()
+            {
+                new(1, 24, "Florianópolis"),
+                new(2, 25, "Campinas"),
+                new(3, 25, "São Paulo"),
+                new(4, 19, "Rio de Janeiro")
+            }
+            );
         }
     }
 }

@@ -1,9 +1,11 @@
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class StateController : ControllerBase
     {
@@ -15,7 +17,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar estados.
+        /// [Administrador, Gerente, Usuario] Buscar estados.
         /// </summary>
         /// <remarks>
         /// Pesquisa opcional: name.
@@ -33,6 +35,7 @@ namespace DevInSales.Api.Controllers
         /// <returns>Lista de endereços</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -46,7 +49,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar estados por id.
+        /// [Administrador, Gerente, Usuario] Buscar estados por id.
         /// </summary>
         /// <remarks>
         /// Exemplo de resposta:
@@ -59,6 +62,7 @@ namespace DevInSales.Api.Controllers
         /// <returns>Lista de endereços</returns>
         /// <response code="200">Sucesso.</response>
         /// /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("{stateId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

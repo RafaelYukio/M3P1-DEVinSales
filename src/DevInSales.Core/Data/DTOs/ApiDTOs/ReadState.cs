@@ -1,6 +1,6 @@
 using DevInSales.Core.Entities;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class ReadState
     {

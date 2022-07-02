@@ -1,7 +1,6 @@
 using DevInSales.Core.Data.Context;
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
-
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,15 +16,10 @@ namespace DevInSales.Core.Services
         }
         public int CreateSaleByUserId(Sale sale)
         {
-            
             if (sale.SaleDate == DateTime.MinValue)
                 sale.SetSaleDateToToday();
-            if (sale.BuyerId == 0 || sale.SellerId == 0)
+            if (sale.BuyerId == "0" || sale.SellerId == "0")
                 throw new ArgumentNullException("Id não pode ser nulo nem zero.");
-            if (!_context.Users.Any(user => user.Id == sale.BuyerId))
-                throw new ArgumentException("BuyerId não encontrado.");
-            if (!_context.Users.Any(user => user.Id == sale.SellerId))
-                throw new ArgumentException("SellerId não encontrado.");
 
             _context.Sales.Add(sale);
             _context.SaveChanges();
@@ -36,8 +30,6 @@ namespace DevInSales.Core.Services
         public SaleResponse GetSaleById(int id)
         {
             Sale? sale = _context.Sales
-                .Include(p => p.Buyer)
-                .Include(p => p.Seller)
                 .FirstOrDefault(p => p.Id == id);
 
             if (sale == null)
@@ -47,7 +39,7 @@ namespace DevInSales.Core.Services
 
             var listaProdutos = GetSaleProductsBySaleId(id);
 
-            return new SaleResponse(sale.Id, sale.Seller.Name, sale.Buyer.Name, sale.SaleDate, listaProdutos);
+            return new SaleResponse(sale.Id, sale.SaleDate, listaProdutos);
         }
 
         public List<SaleProductResponse> GetSaleProductsBySaleId(int id)
@@ -59,12 +51,12 @@ namespace DevInSales.Core.Services
                 .ToList();
         }
 
-        public List<Sale> GetSaleBySellerId(int? userId)
+        public List<Sale> GetSaleBySellerId(string userId)
         {
             return _context.Sales.Where(p => p.SellerId == userId).ToList();
         }
 
-        public List<Sale> GetSaleByBuyerId(int? userId)
+        public List<Sale> GetSaleByBuyerId(string userId)
         {
             return _context.Sales.Where(p => p.BuyerId == userId).ToList();
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class SaleProductResponse
     {
@@ -20,6 +20,6 @@ namespace DevInSales.Core.Data.Dtos
             Amount = amount;
             UnitPrice = unitPrice;
             Total = total;
-        }    
+        }
     }
 }

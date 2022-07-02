@@ -1,11 +1,13 @@
-﻿using DevInSales.Core.Data.Dtos;
+﻿using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/sales/")]
 
     public class SaleProductController : ControllerBase
@@ -29,12 +31,13 @@ namespace DevInSales.Api.Controllers
             return Ok(id);
         }
         /// <summary>
-        /// Cadastra um produto em uma venda.
+        /// [Administrador, Gerente] Cadastra um produto em uma venda.
         /// </summary>
         ///<returns> Retorna um id da tabela saleProduct.</returns>
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, caso não seja enviado um productId ou quando a quantidade/preço enviados forem menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso o productId ou o saleId não existam.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("{saleId}/item")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateSaleProduct(int saleId, SaleProductRequest saleProduct)
@@ -64,14 +67,6 @@ namespace DevInSales.Api.Controllers
                 return BadRequest();
 
             }
-
-
-
-
-
         }
-
-
-
     }
 }

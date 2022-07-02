@@ -1,12 +1,12 @@
 using DevInSales.Core.Data.Context;
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Core.Services
 {
-  public class AddressService : IAddressService
+    public class AddressService : IAddressService
   {
     private readonly DataContext _context;
     public AddressService(DataContext context)

@@ -1,11 +1,12 @@
-
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/sales/")]
 
@@ -19,11 +20,12 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Busca uma venda com uma lista de produtos.
+        /// [Administrador, Gerente, Usuario] Busca uma venda com uma lista de produtos.
         /// </summary>
         ///<returns>Retorna uma venda com uma lista de produtos.</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="404">Not Found, quando o saleId não for encontrado.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("{saleId}")]
         public ActionResult<SaleResponse> GetSaleById(int saleId)
         {
@@ -35,13 +37,14 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Busca as vendas de um determinado usuário.
+        /// [Administrador, Gerente, Usuario] Busca as vendas de um determinado usuário.
         /// </summary>
         ///<returns>Retorna todas as vendas de um determinado usuário.</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma venda.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("/api/user/{userId}/sales")]
-        public ActionResult<Sale> GetSalesBySellerId(int? userId)
+        public ActionResult<Sale> GetSalesBySellerId(string userId)
         {
             var sales = _saleService.GetSaleBySellerId(userId);
             if (sales.Count == 0)
@@ -50,13 +53,14 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Busca as compras de um determinado usuário.
+        /// [Administrador, Gerente, Usuario] Busca as compras de um determinado usuário.
         /// </summary>
         ///<returns>Retorna todas as compras de um determinado usuário.</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma compra.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("/api/user/{userId}/buy")]
-        public ActionResult<Sale> GetSalesByBuyerId(int? userId)
+        public ActionResult<Sale> GetSalesByBuyerId(string userId)
         {
             var sales = _saleService.GetSaleByBuyerId(userId);
             if (sales.Count == 0)
@@ -65,16 +69,17 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Cria uma nova venda para um usuário.
+        /// [Administrador, Gerente] Cria uma nova venda para um usuário.
         /// </summary>
         ///<returns>Retorna o id da venda criada.</returns>
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, quando não é enviado um buyerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("/api/user/{userId}/sales")]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public ActionResult<int> CreateSaleBySellerId(int userId, SaleBySellerRequest saleRequest)
+        public ActionResult<int> CreateSaleBySellerId(string userId, SaleBySellerRequest saleRequest)
         {
             try
             {
@@ -93,12 +98,13 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Altera o preço de um produto em determinada venda.
+        /// [Administrador, Gerente] Altera o preço de um produto em determinada venda.
         /// </summary>
         ///<returns>Retorna No Content.</returns>
         /// <response code="204">Alterado com sucesso.</response>
         /// <response code="400">Bad Request, caso o preço digitado seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPatch("{saleId}/product/{productId}/price/{unitPrice}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
@@ -120,12 +126,13 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Altera a quantidade de um produto em determinada venda.
+        /// [Administrador, Gerente] Altera a quantidade de um produto em determinada venda.
         /// </summary>
         ///<returns>Retorna No Content.</returns>
         /// <response code="204">Alterado com sucesso.</response>
         /// <response code="400">Bad Request, caso a quantidade digitada seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPatch("{saleId}/product/{productId}/amount/{amount}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
@@ -149,15 +156,16 @@ namespace DevInSales.Api.Controllers
 
         }
         /// <summary>
-        /// Cria uma nova compra para um usuário.
+        /// [Administrador, Gerente] Cria uma nova compra para um usuário.
         /// </summary>
         ///<returns>Retorna o id da compra criada.</returns>
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, quando não enviado um sellerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("/api/user/{userId}/buy")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
+        public ActionResult<int> CreateSaleByBuyerId(string userId, SaleByBuyerRequest saleRequest)
         {
             try
             {
@@ -175,13 +183,13 @@ namespace DevInSales.Api.Controllers
             }
         }
         /// <summary>
-        /// Cria uma nova entrega para uma venda.
+        /// [Administrador, Gerente] Cria uma nova entrega para uma venda.
         /// </summary>
         ///<returns>Retorna o Id da entrega criada.</returns>
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, caso não enviado um AddressId ou a data enviada seja anterior a data atual.</response>
         /// <response code="404">Not Found, caso não exista um saleId ou um addressId igual ao enviado.</response>
-
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("{saleId}/deliver")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateDeliveryForASale(int saleId, DeliveryRequest deliveryRequest)

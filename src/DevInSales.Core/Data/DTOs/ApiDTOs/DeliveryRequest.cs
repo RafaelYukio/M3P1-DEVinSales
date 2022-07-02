@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class DeliveryRequest
     {

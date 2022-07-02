@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class SaleResponse
     {
@@ -14,11 +14,9 @@ namespace DevInSales.Core.Data.Dtos
         public DateTime SaleDate { get; private set; }
         public List<SaleProductResponse> SaleProducts { get; private set; }
 
-        public SaleResponse(int saleId, string sellerName, string buyerName, DateTime saleDate, List<SaleProductResponse> saleProducts)
+        public SaleResponse(int saleId, DateTime saleDate, List<SaleProductResponse> saleProducts)
         {
             SaleId = saleId;
-            SellerName = sellerName;
-            BuyerName = buyerName;
             SaleDate = saleDate;
             SaleProducts = saleProducts;
         }

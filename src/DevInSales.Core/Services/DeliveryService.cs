@@ -20,10 +20,16 @@ namespace DevInSales.Core.Services
             if (!idAddress.HasValue && !saleId.HasValue)
             {
                 return _context.Deliveries
+                .Include(p => p.Sale)
+                .Include(p => p.Address)
+                .Include(p => p.Address.City)
                 .ToList();
             }
             return _context.Deliveries
                 .Where(p => p.AddressId == idAddress || p.SaleId == saleId)
+                .Include(p => p.Sale)
+                .Include(p => p.Address)
+                .Include(p => p.Address.City)
                 .ToList();
         }
     }

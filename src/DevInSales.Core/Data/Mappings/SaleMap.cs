@@ -14,16 +14,6 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.SaleDate);
-
-            builder.HasOne(p => p.Buyer)
-                .WithMany()
-                .HasForeignKey(p => p.BuyerId)
-                .OnDelete(DeleteBehavior.NoAction);           
-
-            builder.HasOne(p => p.Seller)
-                .WithMany()
-                .HasForeignKey(p => p.SellerId)
-                .OnDelete(DeleteBehavior.NoAction); 
         }
     }
 }

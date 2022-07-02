@@ -13,6 +13,14 @@ namespace DevInSales.Core.Entities
         public City(int stateId, string name)
         {
             StateId = stateId;
+
+            Name = name;
+        }
+
+        public City(int id, int stateId, string name)
+        {
+            Id = id;
+            StateId = stateId;
             Name = name;
         }
     }

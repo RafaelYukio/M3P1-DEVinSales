@@ -8,26 +8,21 @@ namespace DevInSales.Core.Entities
 {
     public class Sale : Entity
     {
+        public string BuyerId { get; private set; }
+        public string SellerId { get; private set; }
+        public DateTime SaleDate { get; private set; }
 
-        public Sale(int buyerId, int sellerId, DateTime saleDate)
+        public Sale(string buyerId, string sellerId, DateTime saleDate)
         {
             BuyerId = buyerId;
             SellerId = sellerId;
             SaleDate = saleDate;
         }
-        public int BuyerId { get; private set; }
-        public int SellerId { get; private set; }
 
         public void SetSaleDateToToday()
         {
             SaleDate = DateTime.Now.ToUniversalTime();
         }
-
-        public DateTime SaleDate { get; private set; }        
-
-        [JsonIgnore]        
-        public User? Buyer { get; private set; }
-        [JsonIgnore]     
-        public User? Seller { get; private set; }
+ 
     }
 }
