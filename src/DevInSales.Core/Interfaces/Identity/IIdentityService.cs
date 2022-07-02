@@ -7,6 +7,7 @@ namespace DevInSales.Core.Interfaces.Identity
     public interface IIdentityService
     {
         Task CadastrarUsuario(CadastroRequest usuarioCadastro);
+        Task CadastrarGerente(CadastroRequest usuarioCadastro);
         Task<User> ObterUsuarioPorId(string id);
         List<User> ObterUsuarios();
         Task ExcluirUsuarioPorId(string id);
