@@ -35,8 +35,8 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         /// <response code="400">Formato invalido</response>
         [Authorize(Roles = "Administrador, Gerente")]
-        [HttpPost("createUser")]
-        public async Task<ActionResult> CriarUser(CadastroRequest usuarioCadastro)
+        [HttpPost("criarUsuario")]
+        public async Task<ActionResult> CriarUsuario(CadastroRequest usuarioCadastro)
         {
             if (!ModelState.IsValid)
             {
@@ -49,6 +49,46 @@ namespace DevInSales.Api.Controllers
             try
             {
                 await _identityService.CadastrarUsuario(usuarioCadastro);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// [Administrador] Cadastra um novo gerente.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Exemplo de resposta:
+        /// [
+        ///   {
+        ///     "id": 1
+        ///   }
+        /// ]
+        /// </para>
+        /// </remarks>
+        /// <returns>Lista de endereços</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
+        /// <response code="400">Formato invalido</response>
+        [Authorize(Roles = "Administrador")]
+        [HttpPost("criarGerente")]
+        public async Task<ActionResult> CriarGerente(CadastroRequest usuarioCadastro)
+        {
+            if (!ModelState.IsValid)
+            {
+                var erros = ModelState.Values
+                            .SelectMany(valores => valores.Errors)
+                            .Select(erro => erro.ErrorMessage);
+                return BadRequest(erros);
+            }
+
+            try
+            {
+                await _identityService.CadastrarGerente(usuarioCadastro);
                 return Ok();
             }
             catch (Exception ex)

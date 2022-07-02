@@ -47,6 +47,26 @@ namespace DevInSales.Identity.Identity
             throw new ArgumentException(novoUsuario.Errors.FirstOrDefault().Description);
         }
 
+        public async Task CadastrarGerente(CadastroRequest usuarioCadastro)
+        {
+            IdentityUser? identityUser = new IdentityUser
+            {
+                UserName = usuarioCadastro.Email,
+                Email = usuarioCadastro.Email,
+            };
+
+            IdentityRole? identityRole = new IdentityRole("Gerente");
+
+            var novoUsuario = await _userManager.CreateAsync(identityUser, usuarioCadastro.Senha);
+            if (novoUsuario.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
+                return;
+            }
+
+            throw new ArgumentException(novoUsuario.Errors.FirstOrDefault().Description);
+        }
+
         public async Task<User> ObterUsuarioPorId(string id)
         {
             IdentityUser identityUser = await _userManager.FindByIdAsync(id);
