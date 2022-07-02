@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class SaleBySellerRequest
     {
-        public SaleBySellerRequest(int buyerId, DateTime saleDate)
+        public string BuyerId { get; private set; }
+        public DateTime SaleDate { get; private set; }
+
+        public SaleBySellerRequest(string buyerId, DateTime saleDate)
         {
             BuyerId = buyerId;
             SaleDate = saleDate;
         }
 
-        public int BuyerId { get; private set; }
-        public DateTime SaleDate { get; private set; }
-
-        public Sale ConvertToEntity(int userId)
+        public Sale ConvertToEntity(string userId)
         {
             return new Sale(BuyerId, userId, SaleDate);
         }

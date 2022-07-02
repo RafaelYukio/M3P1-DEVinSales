@@ -1,5 +1,5 @@
 using DevInSales.Core.Data.Context;
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;

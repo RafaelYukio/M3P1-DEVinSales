@@ -1,4 +1,4 @@
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 using DevInSales.Core.Entities;
 
 
@@ -10,9 +10,9 @@ namespace DevInSales.Core.Interfaces
         
         public int CreateSaleByUserId(Sale sale);
         
-        public List<Sale> GetSaleBySellerId(int? userId);
+        public List<Sale> GetSaleBySellerId(string userId);
 
-        public List<Sale> GetSaleByBuyerId(int? userId);
+        public List<Sale> GetSaleByBuyerId(string userId);
        
         public void UpdateUnitPrice(int saleId, int productId, decimal price);
 

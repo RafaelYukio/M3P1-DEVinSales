@@ -1,4 +1,4 @@
-using DevInSales.Core.Data.Dtos;
+using DevInSales.Core.Data.DTOs.ApiDTOs;
 
 namespace DevInSales.Core.Interfaces
 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DevInSales.Core.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,6 +24,21 @@ namespace DevInSales.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sales",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BuyerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SaleDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sales", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "States",
                 columns: table => new
                 {
@@ -35,90 +50,6 @@ namespace DevInSales.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_States", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "varchar(150)", unicode: false, nullable: false),
-                    Password = table.Column<string>(type: "varchar(50)", unicode: false, nullable: false),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StateId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cities_States_StateId",
-                        column: x => x.StateId,
-                        principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sales",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BuyerId = table.Column<int>(type: "int", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: false),
-                    SaleDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sales", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Sales_Users_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Sales_Users_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    Street = table.Column<string>(type: "varchar(150)", unicode: false, maxLength: 150, nullable: false),
-                    Cep = table.Column<string>(type: "varchar(8)", unicode: false, maxLength: 8, nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    Complement = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,6 +76,49 @@ namespace DevInSales.Core.Migrations
                         column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StateId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_States_StateId",
+                        column: x => x.StateId,
+                        principalTable: "States",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    Street = table.Column<string>(type: "varchar(150)", unicode: false, maxLength: 150, nullable: false),
+                    Cep = table.Column<string>(type: "varchar(8)", unicode: false, maxLength: 8, nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    Complement = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,14 +198,26 @@ namespace DevInSales.Core.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "BirthDate", "Email", "Name", "Password" },
+                table: "Cities",
+                columns: new[] { "Id", "Name", "StateId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Allie.Spencer@manuel.us", "Allie Spencer", "661845" },
-                    { 2, new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Earnest@kari.biz", "Lemuel Witting", "800631" },
-                    { 3, new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Adella_Shanahan@kenneth.biz", "Kari Olson I", "661342" },
-                    { 4, new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Americo.Strosin@kale.tv", "Marion Nolan DDS", "661964" }
+                    { 1, "Florianópolis", 24 },
+                    { 2, "Campinas", 25 },
+                    { 3, "São Paulo", 25 },
+                    { 4, "Rio de Janeiro", 19 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "Cep", "CityId", "Complement", "Number", "Street" },
+                values: new object[,]
+                {
+                    { 1, "13000000", 1, "Casa", 100, "Rua Aqui" },
+                    { 2, "11111222", 2, "Ap", 200, "Rua Ali" },
+                    { 3, "33333444", 3, "Chácara", 333, "Rua Rua" },
+                    { 4, "55555666", 4, "Chácara", 333, "Rua 1" },
+                    { 5, "77777888", 4, "Casa", 444, "Rua 2" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -263,16 +249,6 @@ namespace DevInSales.Core.Migrations
                 name: "IX_SaleProducts_SaleId",
                 table: "SaleProducts",
                 column: "SaleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sales_BuyerId",
-                table: "Sales",
-                column: "BuyerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sales_SellerId",
-                table: "Sales",
-                column: "SellerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -294,9 +270,6 @@ namespace DevInSales.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cities");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "States");

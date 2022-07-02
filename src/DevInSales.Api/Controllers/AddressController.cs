@@ -1,11 +1,13 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AddressController : ControllerBase
@@ -26,7 +28,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar endereços.
+        /// [Administrador, Gerente, Usuario] Buscar endereços.
         /// </summary>
         /// <remarks>
         /// Pesquisas opcionais: stateId, cityId, street, cep.
@@ -53,6 +55,7 @@ namespace DevInSales.Api.Controllers
         /// <returns>Lista de endereços</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -66,7 +69,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Cadastrar um endereço.
+        /// [Administrador, Gerente] Cadastrar um endereço.
         /// </summary>
         /// <remarks>
         /// Exemplo:
@@ -83,6 +86,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
         /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("/api/state/{stateId}/city/{cityId}/address")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -113,11 +117,12 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Deletar um endereço
+        /// [Administrador] Deletar um endereço
         /// </summary>
         /// <response code="204">Endereço deletado com sucesso</response>
         /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
         /// <response code="404">Not Found, endereço não encontrado.</response>
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{addressId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -140,7 +145,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Atualiza as propriedades do endereço especificado.
+        /// [Administrador, Gerente] Atualiza as propriedades do endereço especificado.
         /// </summary>
         /// <remarks>
         /// Propriedades opcionais: Street, Cep, Number, Complement.
@@ -159,6 +164,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">A atualização teve sucesso.</response>
         /// <response code="400">Bad Request. Nenhuma propriedade foi informada no corpo ou o formato é inválido.</response>
         /// <response code="404">Not Found. O endereço solicitado não existe.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPatch("{addressId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

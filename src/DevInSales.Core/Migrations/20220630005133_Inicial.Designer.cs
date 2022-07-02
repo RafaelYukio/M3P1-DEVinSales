@@ -4,6 +4,7 @@ using DevInSales.Core.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevInSales.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220630005133_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -58,6 +60,53 @@ namespace DevInSales.Core.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Addresses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cep = "13000000",
+                            CityId = 1,
+                            Complement = "Casa",
+                            Number = 100,
+                            Street = "Rua Aqui"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cep = "11111222",
+                            CityId = 2,
+                            Complement = "Ap",
+                            Number = 200,
+                            Street = "Rua Ali"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cep = "33333444",
+                            CityId = 3,
+                            Complement = "Chácara",
+                            Number = 333,
+                            Street = "Rua Rua"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cep = "55555666",
+                            CityId = 4,
+                            Complement = "Chácara",
+                            Number = 333,
+                            Street = "Rua 1"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Cep = "77777888",
+                            CityId = 4,
+                            Complement = "Casa",
+                            Number = 444,
+                            Street = "Rua 2"
+                        });
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.City", b =>
@@ -82,6 +131,32 @@ namespace DevInSales.Core.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("Cities", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Florianópolis",
+                            StateId = 24
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Campinas",
+                            StateId = 25
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "São Paulo",
+                            StateId = 25
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Rio de Janeiro",
+                            StateId = 19
+                        });
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.Delivery", b =>
@@ -202,20 +277,18 @@ namespace DevInSales.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
+                    b.Property<string>("BuyerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
+                    b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("SellerId");
 
                     b.ToTable("Sales", (string)null);
                 });
@@ -438,70 +511,6 @@ namespace DevInSales.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DevInSales.Core.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Allie.Spencer@manuel.us",
-                            Name = "Allie Spencer",
-                            Password = "661845"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Earnest@kari.biz",
-                            Name = "Lemuel Witting",
-                            Password = "800631"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Adella_Shanahan@kenneth.biz",
-                            Name = "Kari Olson I",
-                            Password = "661342"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BirthDate = new DateTime(1980, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Americo.Strosin@kale.tv",
-                            Name = "Marion Nolan DDS",
-                            Password = "661964"
-                        });
-                });
-
             modelBuilder.Entity("DevInSales.Core.Entities.Address", b =>
                 {
                     b.HasOne("DevInSales.Core.Entities.City", "City")
@@ -541,25 +550,6 @@ namespace DevInSales.Core.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("DevInSales.Core.Entities.Sale", b =>
-                {
-                    b.HasOne("DevInSales.Core.Entities.User", "Buyer")
-                        .WithMany()
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DevInSales.Core.Entities.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("DevInSales.Core.Entities.SaleProduct", b =>

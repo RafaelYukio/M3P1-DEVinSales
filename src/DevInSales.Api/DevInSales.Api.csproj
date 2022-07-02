@@ -10,13 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		  <PrivateAssets>all</PrivateAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevInSales.Core\DevInSales.Core.csproj" />
+    <ProjectReference Include="..\DevInSales.Identity\DevInSales.Identity.csproj" />
   </ItemGroup>
 
 </Project>

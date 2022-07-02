@@ -1,11 +1,14 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class CityController : ControllerBase
     {
         private readonly IStateService _stateService;
@@ -18,7 +21,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar cidades.
+        /// [Administrador, Gerente, Usuario] Buscar cidades.
         /// </summary>
         /// <remarks>
         /// Pesquisa opcional: name.
@@ -41,6 +44,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("/api/State/{stateId}/city")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -59,7 +63,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar cidade por id.
+        /// [Administrador, Gerente, Usuario] Buscar cidade por id.
         /// </summary>
         /// <remarks>
         /// Exemplo de resposta:
@@ -78,6 +82,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
         /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("/api/State/{stateId}/city/{cityId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -99,7 +104,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Cadastrar uma cidade.
+        /// [Administrador, Gerente] Cadastrar uma cidade.
         /// </summary>
         /// <remarks>
         /// Exemplo:
@@ -112,6 +117,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="201">Cadastrado com sucesso.</response>
         /// <response code="400">Bad Request, cidade já cadastrada no banco de dados.</response>
         /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost("/api/State/{stateId}/city")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

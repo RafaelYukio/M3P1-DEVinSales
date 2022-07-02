@@ -1,11 +1,13 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
@@ -17,7 +19,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Buscar produtos por id.
+        /// [Administrador, Gerente, Usuario] Buscar produtos por id.
         /// </summary>
         /// <remarks>
         /// Exemplo:
@@ -31,7 +33,7 @@ namespace DevInSales.Api.Controllers
         /// <returns></returns>
         /// <response code="204">A atualização teve sucesso.</response>
         /// <response code="404">Not Found. O Produto solicitado não existe.</response>
-
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("{id}")]
         public ActionResult<Product> ObterProdutoPorId(int id)
         {
@@ -43,7 +45,7 @@ namespace DevInSales.Api.Controllers
 
 
         /// <summary>
-        ///  Modificar produto.
+        /// [Administrador, Gerente] Modificar produto.
         /// </summary>
         /// <remarks>
         /// Exemplo:
@@ -57,8 +59,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">A atualização teve sucesso.</response>
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
-
-
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPut("{id}")]
         public ActionResult AtualizarProduto(AddProduct model, int id)
         {
@@ -81,14 +82,13 @@ namespace DevInSales.Api.Controllers
 
 
         /// <summary>
-        ///  Deleta um produto pelo id.
+        /// [Administrador] Deleta um produto pelo id.
         /// </summary>
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         /// <response code="404">Not Found, endereço não encontrado.</response>
         /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
         /// <response code="500"> Internal Server Error, erro interno do servidor. </response>
-
-
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
@@ -110,7 +110,7 @@ namespace DevInSales.Api.Controllers
         }
 
         /// <summary>
-        /// Busca todos os produtos.
+        /// [Administrador, Gerente, Usuario] Busca todos os produtos.
         /// </summary>
         /// <remarks>
         /// Exemplo de resposta:
@@ -123,7 +123,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
-
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet]
         public ActionResult<List<Product>> GetAll(string? name, decimal? priceMin, decimal? priceMax)
         {
@@ -143,9 +143,8 @@ namespace DevInSales.Api.Controllers
             }
         }
 
-
         /// <summary>
-        /// Cadastrar um produto.
+        /// [Administrador, Gerente] Cadastrar um produto.
         /// </summary>
         /// <remarks>
         /// Exemplo:
@@ -157,6 +156,7 @@ namespace DevInSales.Api.Controllers
         /// <returns> product id </returns>
         /// <response code="201">Cadastrado com sucesso.</response>
         /// <response code="400">Bad Request Esse produto já existe na base de dados</response>
+        [Authorize(Roles = "Administrador, Gerente")]
         [HttpPost]
         public ActionResult PostProduct(AddProduct model)
         {

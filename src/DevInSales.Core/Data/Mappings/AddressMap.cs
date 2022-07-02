@@ -39,6 +39,16 @@ namespace DevInSales.Core.Data.Mappings
             builder.HasOne(p => p.City)
                 .WithMany(p => p.Addresses)
                 .HasForeignKey(p => p.CityId);
+            builder.HasData(
+                new List<Address> {
+                    new(1, "Rua Aqui", "13000000", 100, "Casa", 1),
+                    new(2, "Rua Ali", "11111222", 200, "Ap", 2),
+                    new(3, "Rua Rua", "33333444", 333, "Chácara", 3),
+                    new(4, "Rua 1", "55555666", 333, "Chácara", 4),
+                    new(5, "Rua 2", "77777888", 444, "Casa", 4)
+                }
+
+                );
         }
     }
 }

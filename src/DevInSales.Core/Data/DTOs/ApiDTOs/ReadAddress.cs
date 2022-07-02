@@ -1,6 +1,6 @@
 using DevInSales.Core.Entities;
 
-namespace DevInSales.Core.Data.Dtos
+namespace DevInSales.Core.Data.DTOs.ApiDTOs
 {
     public class ReadAddress
     {
@@ -11,7 +11,7 @@ namespace DevInSales.Core.Data.Dtos
         public string Complement { get; set; }
         public ReadAddressCity City { get; set; }
         public ReadCityState State { get; set; }
-        
+
         public static ReadAddress? AddressToReadAddress(Address? address)
         {
             if (address == null)

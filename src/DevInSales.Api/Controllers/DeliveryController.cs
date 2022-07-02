@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevInSales.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/deliver")]
     public class DeliveryController : ControllerBase
     {
@@ -15,11 +17,12 @@ namespace DevInSales.Api.Controllers
             _deliveryService = deliveryService;
         }
         /// <summary>
-        /// Busca uma lista de entregas.
+        /// [Administrador, Gerente, Usuario] Busca uma lista de entregas.
         /// </summary>
         ///<returns>Retorna uma lista de entregas à depender do parâmetro enviado (SaleId ou IdAdress).</returns>
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
+        [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet]
         public ActionResult<Delivery> GetDelivery(int? idAddress, int? saleId)
         {

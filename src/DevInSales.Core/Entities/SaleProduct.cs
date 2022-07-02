@@ -6,6 +6,8 @@ namespace DevInSales.Core.Entities
         public int ProductId { get; private set; }
         public decimal UnitPrice { get; private set; }
         public int Amount { get; private set; }
+        public Sale? Sales { get; private set; }
+        public Product? Products { get; private set; }
 
         public SaleProduct(int saleId, int productId, decimal unitPrice, int amount)
         {
@@ -14,8 +16,15 @@ namespace DevInSales.Core.Entities
             UnitPrice = unitPrice;
             Amount = amount;
         }
-        public Sale? Sales { get; private set; }
-        public Product? Products { get; private set; }
+
+        public SaleProduct(int id, int saleId, int productId, decimal unitPrice, int amount)
+        {
+            Id = id;
+            SaleId = saleId;
+            ProductId = productId;
+            UnitPrice = unitPrice;
+            Amount = amount;
+        }
 
         public void UpdateUnitPrice(decimal unitPrice)
         {            
