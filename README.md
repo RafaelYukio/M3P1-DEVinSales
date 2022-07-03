@@ -72,3 +72,7 @@ Refatorar código feito a partir do M2P2, implementando autenticação por JWT, 
 </br>
 
 Banco de dados populado automaticamente.
+
+## Trello
+
+https://trello.com/b/gWfk8wDH/m3p1-devinsales
