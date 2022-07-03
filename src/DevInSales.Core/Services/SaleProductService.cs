@@ -52,16 +52,12 @@ namespace DevInSales.Core.Services
 
             if (saleProduct == null)
             {
-                
                 return 0;
             }
 
             return saleProduct.Id;
 
         }
-
-        
-
 
     }
 }
