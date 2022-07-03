@@ -31,7 +31,7 @@ Refatorar código feito a partir do M2P2, implementando autenticação por JWT, 
 - Todos os endpoints foram protegidos com as 3 regras de permissionamento;
 - Acima de 30% da aplicação foi coberta de testes.
 </details>
-<br/>
+</br>
 
 ## Etapas
 
@@ -40,3 +40,38 @@ Refatorar código feito a partir do M2P2, implementando autenticação por JWT, 
 - Implementação do Identity;
 - Implementação do JWT;
 - Implementação dos testes.
+
+</br>
+
+## Usuários (logins)
+
+<details>
+  <summary>Usuários</summary>
+  
+- usuario1@dev.com.br
+- usuario2@dev.com.br
+- usuario3@dev.com.br
+- usuario4@dev.com.br
+    - senha: @Usuario1234
+
+</details>
+
+<details>
+  <summary>Gerentes</summary>
+  
+- gerente1@dev.com.br
+- gerente2@dev.com.br
+    - senha: @Gerente1234
+
+</details>
+
+<details>
+  <summary>Administrador</summary>
+  
+- admin@dev.com.br
+    - senha: @Admin1234
+
+</details>
+</br>
+
+Banco de dados populado automaticamente.
