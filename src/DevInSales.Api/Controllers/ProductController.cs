@@ -63,7 +63,7 @@ namespace DevInSales.Api.Controllers
         [HttpPut("{id}")]
         public ActionResult AtualizarProduto(AddProduct model, int id)
         {
-            var productOld = _productService.ObterProductPorId(id);
+            var productld = _productService.ObterProductPorId(id);
 
             if (model == null)
                 return NotFound();
@@ -73,7 +73,7 @@ namespace DevInSales.Api.Controllers
                 return BadRequest("esse nome já existe na base de dados");
 
 
-            productOld.AtualizarDados(model.Name, model.SuggestedPrice);
+            productld.AtualizarDados(model.Name, model.SuggestedPrice);
 
             _productService.Atualizar();
 

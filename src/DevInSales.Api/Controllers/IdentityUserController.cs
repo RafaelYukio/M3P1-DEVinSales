@@ -149,7 +149,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         [Authorize(Roles = "Administrador, Gerente, Usuario")]
         [HttpGet("users")]
-        public ActionResult<List<User>> ObterUsers()
+        public ActionResult ObterUsers()
         {
             List<User> users = _identityService.ObterUsuarios();
 
@@ -177,7 +177,7 @@ namespace DevInSales.Api.Controllers
             }
             catch (Exception ex)
             {
-                    return NotFound(ex.Message);
+                return NotFound(ex.Message);
             }
         }
 

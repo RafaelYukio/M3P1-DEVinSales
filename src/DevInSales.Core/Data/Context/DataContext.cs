@@ -1,5 +1,6 @@
 using System.Reflection;
 using DevInSales.Core.Entities;
+using DevInSales.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Core.Data.Context
